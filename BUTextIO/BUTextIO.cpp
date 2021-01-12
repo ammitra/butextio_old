@@ -38,7 +38,7 @@ class BUTextIO {
         std::unique_ptr<std::ostream> cout_stream() {
             return std::make_unique<std::ostream>(std::cout.rdbuf());
         }
-        // do the same for files - worry about this later
+        // have stream write to file
         std::unique_ptr<std::ostream> file_stream(const std::string& filename) {
             return std::make_unique<std::ofstream>(filename);
         }
@@ -76,7 +76,7 @@ class BUTextIO {
  * we want the result to pass thru BUTextIO and go to Herd and local console
  */
 void DummyApolloCommand() {
-    // do some stuff
+    // do some stuff related to command (i.e read, svfplayer, CM power, etc)
     BUTextIO t;
     t.AddOutputStream(/* "blah.txt" */);
     t << "the command result is 0xDEADBEEF";
@@ -87,7 +87,7 @@ void DummyApolloCommand() {
 }
 /*
  * this is the Shep command which calls the ApolloCommand (Shep is not running on SoC)
- * it normally produces a command status return but now we want the result, too
+ * it normally returns the command status but now we want the result, too
  */
 void DummyShepCommand() {
     // currently only the command status is returned.
@@ -96,13 +96,13 @@ void DummyShepCommand() {
     // now, we utilize BUTextIO to retrieve cout
     // stringstream as print destination
     std::stringstream ss;
-    // save old buffer & change it
+    // save old buffer
     auto old = std::cout.rdbuf(ss.rdbuf());
-    // all cout from the command should go to ss
+    // all cout from the ApolloCommand should go to ss
     DummyApolloCommand();
-    // reset buffers (here or in ApolloCommand?)
+    // reset buffers
     std::cout.rdbuf(old);
-    // print the command return (hopefully)
+    // print the command result (hopefully)
     std::cout << ss.str() << "from Shep" << std::endl;
 }
 
