@@ -65,8 +65,8 @@ class BUTextIO {
 
         void ResetStreams() {
             for (auto &stream : streams) {
-                //&stream.get()->flush();
-                stream->clear();
+                // cause stream buffer to flush its output buffer
+                &stream.get()->flush();
             }
         }
 };
@@ -79,10 +79,11 @@ void DummyApolloCommand() {
     // do some stuff related to command (i.e read, svfplayer, CM power, etc)
     BUTextIO t;
     t.AddOutputStream(/* "blah.txt" */);
+    // normally these would be sent to cout on-board Apollo - we want to see it in Shep
     t << "the command result is 0xDEADBEEF";
     // testing printf call
     t << putf("%3d ", 23) << putf("%a\n", 256.);
-    // do we need to reset here? or in Shep?
+    // send characters to external destination (end of file, send to console, etc)
     t.ResetStreams();
 }
 /*
@@ -102,21 +103,11 @@ void DummyShepCommand() {
     DummyApolloCommand();
     // reset buffers
     std::cout.rdbuf(old);
-    // print the command result (hopefully)
+    // print the command result locally (this would be seen on Shep's console - off-board)
     std::cout << ss.str() << "from Shep" << std::endl;
 }
 
 int main() {
-    /* * * * Testing the BUTextIO class
-    BUTextIO t;
-    std::cout << "BUTextIO obj instantiated" << std::endl;
-    // add one cout ostream buffer to vector
-    t.AddOutputStream("BUTextIO_test.txt");
-    std::cout << "Output streams added to vector" << std::endl;
-    // write to it
-    t << "   testing testing 123 \n";
-    std::cout << "streams written to" << std::endl;
-    */
+    // command sent to ApolloSM via Shep
     DummyShepCommand();
-    // return 0 implicit for main()
 }
