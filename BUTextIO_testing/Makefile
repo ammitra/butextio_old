@@ -1,7 +1,7 @@
 CFLAGS = -O
 CC = g++
 
-SRC = main.cxx BUTextIO.cc
+SRC = main.cxx BUTextIO.cc DummyCommands.cc
 OBJ = $(SRC:.cc = .o)
 
 BUTextIO: $(OBJ)
