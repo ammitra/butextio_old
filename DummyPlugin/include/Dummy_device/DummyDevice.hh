@@ -32,12 +32,13 @@ namespace BUTool {
             std::string autoComplete_Help(std::vector<std::string> const &, stdLLstring const &, int);
     };
 
-    RegisterDevice(DummyDevice,
-                   "Dummy",
-                   "",
-                   "s",
-                   "Dummy",
-                   "");    // register Dummydevice with factory
+    // register Dummydevice with factory
+    RegisterDevice(DummyDevice,    // class Name
+                   "Dummy",        // class nickname 
+                   "",             // class help
+                   "d",            // CLI flag 
+                   "dummy",        // CLI full flag 
+                   "");            // CLI description
 
 }   // namespace BUTool
 

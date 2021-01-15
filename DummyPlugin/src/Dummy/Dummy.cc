@@ -9,7 +9,7 @@ Dummy::Dummy() {
 
 // deconstructor 
 Dummy::~Dummy() {
-    std::cout << "object is being destroyed, deconstructor called" << std::endl;
+    std::cout << "object is being destroyed, destructor called" << std::endl;
 }
 
 float Dummy::add(float x, float y) {

@@ -24,13 +24,15 @@ DummyDevice::DummyDevice()
         AddCommand("start",&DummyDevice::Start,
                    "instantiates the dummy\n" \
                    "Usage: \n"                \
-                   " start\n");
+                   " start\n",
+                   &DummyDevice::RegisterAutoComplete);
         AddCommandAlias("s","start");
 
         AddCommand("operations",&DummyDevice::Operations,
                    "performs addition, subtraction, multiplication \n" \
                    "Usage: \n"                                         \
-                   " operations\n");
+                   " operations\n",
+                   &DummyDevice::RegisterAutoComplete);
         AddCommandAlias("o","operations");
     }
 
@@ -66,15 +68,18 @@ DummyDevice::DummyDevice()
             return CommandReturn::BAD_ARGS;
         }
 
+        float x = intArg[0];
+        float y = intArg[1];
+
         // work out different cases
         if (strArg[0] == "add") {
-            myDummy->add();
+            myDummy->add(x,y);
         }
         else if (strArg[0] == "subtract") {
-            myDummy->subtract();
+            myDummy->subtract(x,y);
         }
         else if (strArg[0] == "multiply") {
-            myDummy->multiply();
+            myDummy->multiply(x,y);
         }
 
         return CommandReturn::OK;
