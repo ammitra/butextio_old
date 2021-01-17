@@ -25,8 +25,13 @@ namespace BUTool {
             // add new commands here
             // instantiates the Dummy obj
             CommandReturn::status Start(std::vector<std::string>, std::vector<uint64_t>);
-            // performs a given operation
+            // performs a given operation (not working yet)
             CommandReturn::status Operations(std::vector<std::string>, std::vector<uint64_t>);
+
+            // perform the operations individually
+            CommandReturn::status Add(std::vector<std::string>, std::vector<uint64_t>);
+            CommandReturn::status Subtract(std::vector<std::string>, std::vector<uint64_t>);
+            CommandReturn::status Multiply(std::vector<std::string>, std::vector<uint64_t>);
 
             // add new command (sub command) auto-complete here
             std::string autoComplete_Help(std::vector<std::string> const &, stdLLstring const &, int);
@@ -38,7 +43,8 @@ namespace BUTool {
                    "",             // class help
                    "d",            // CLI flag 
                    "dummy",        // CLI full flag 
-                   "");            // CLI description
+                   ""              // CLI description
+                   );
 
 }   // namespace BUTool
 

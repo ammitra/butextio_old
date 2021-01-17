@@ -34,6 +34,27 @@ DummyDevice::DummyDevice()
                    " operations\n",
                    &DummyDevice::RegisterAutoComplete);
         AddCommandAlias("o","operations");
+
+        AddCommand("add",&DummyDevice::Operations,
+                   "performs addition of two numbers\n" \
+                   "Usage: \n"                                         \
+                   " add x y\n",
+                   &DummyDevice::RegisterAutoComplete);
+        AddCommandAlias("a","operations");
+
+        AddCommand("subtract",&DummyDevice::Operations,
+                   "performs subtraction of two numbers\n" \
+                   "Usage: \n"                                         \
+                   " subtract x y\n",
+                   &DummyDevice::RegisterAutoComplete);
+        AddCommandAlias("s","operations");
+
+        AddCommand("multiply",&DummyDevice::Operations,
+                   "performs multiplication of two numbers\n" \
+                   "Usage: \n"                                         \
+                   " multiply x y\n",
+                   &DummyDevice::RegisterAutoComplete);
+        AddCommandAlias("m","operations");
     }
 
     CommandReturn::status DummyDevice::Start(std::vector<std::string>,std::vector<uint64_t>) {
@@ -46,6 +67,39 @@ DummyDevice::DummyDevice()
             myDummy = new Dummy();
         }
         */
+    }
+
+    CommandReturn::status DummyDevice::Add(std::vector<string> /* strArg */, std::vector<uint64_t> intArg) {
+        if (intArg.size() != 2) {
+            return CommandReturn::BAD_ARGS;
+        }
+
+        float x = intArg[0];
+        float y = intArg[1];
+        
+        myDummy->add(x,y);
+    }
+
+    CommandReturn::status DummyDevice::Subtract(std::vector<string> /* strArg */, std::vector<uint64_t> intArg) {
+        if (intArg.size() != 2) {
+            return CommandReturn::BAD_ARGS;
+        }
+
+        float x = intArg[0];
+        float y = intArg[1];
+        
+        myDummy->subtract(x,y);
+    }
+
+    CommandReturn::status DummyDevice::Multiply(std::vector<string> /* strArg */, std::vector<uint64_t> intArg) {
+        if (intArg.size() != 2) {
+            return CommandReturn::BAD_ARGS;
+        }
+
+        float x = intArg[0];
+        float y = intArg[1];
+        
+        myDummy->multiply(x,y);
     }
 
     CommandReturn::status DummyDevice::Operations(std::vector<std::string> strArg,std::vector<uint64_t> intArg) {
